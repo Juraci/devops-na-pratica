@@ -1,0 +1,7 @@
+---
+
+ - group: name=nagcmd state=present
+
+ - group: name=nagios state=present
+
+ - user: name=nagios groups=nagios,nagcmd

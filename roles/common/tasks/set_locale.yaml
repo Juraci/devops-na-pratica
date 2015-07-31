@@ -1,0 +1,10 @@
+---
+
+- name: verify if the locale is set
+  command: bash -lc "perl -e exit"
+  register: locale_result
+  changed_when: "'Setting locale failed.' in locale_result.stderr"
+
+- name: Copy locale to /etc/default/locale
+  copy: src=../files/locale dest=/etc/default/locale force=yes
+  when: locale_result|changed

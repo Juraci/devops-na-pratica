@@ -1,0 +1,16 @@
+---
+
+- apt: update_cache=yes
+
+- name: ensures nagios required packages are present
+  apt: name={{ item }} state=latest
+  with_items:
+    - apache2
+    - libapache2-mod-php5
+    - build-essential
+    - libgd2-xpm-dev
+    - libssl-dev
+    - xinetd
+    - apache2-utils
+    - traceroute
+    - openssl
