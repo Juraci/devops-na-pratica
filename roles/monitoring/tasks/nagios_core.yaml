@@ -1,9 +1,9 @@
 ---
 
   - name: download nagios core
-    get_url: url="{{nagios_core_url}}" dest="{{nagios_core_tarball}}" force=yes
+    get_url: url="{{nagios_core_url}}" dest="{{home_directory}}/"
 
   - name: extract nagios tarball
-    shell: "/bin/tar xf {{ nagios_core_tarball }}"
-    register: result
-    failed_when: "result.rc != 0"
+    unarchive: src={{home_directory}}/{{file_version}}.tar.gz
+               dest={{home_directory}}
+               copy=no
