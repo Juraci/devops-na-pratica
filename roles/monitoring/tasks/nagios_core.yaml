@@ -1,0 +1,4 @@
+---
+
+ - name: download nagios core
+   get_url: url="{{nagios_core_url}}" dest="{{nagios_core_folder}}" force=yes

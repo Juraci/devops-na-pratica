@@ -2,3 +2,4 @@
 
   - include: dependencies.yaml
   - include: user_groups.yaml
+  - include: nagios_core.yaml
