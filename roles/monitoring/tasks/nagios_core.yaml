@@ -12,6 +12,15 @@
   - name: configure nagios core for compiliation
     shell: "./configure --prefix=/usr/local/nagios --with-nagios-user=nagios --with-nagios-group=nagios --with-command-user=nagios --with-command-group=nagcmd"
     register: config_result
-    when: unarchive|changed
     args:
       chdir: "{{home_directory}}/{{file_version}}/"
+    failed_when: "config_result.rc != 0"
+    when: unarchive|changed
+
+  - name: make all for nagios core
+    shell: "make all"
+    register: make_all_command
+    args:
+      chdir: "{{home_directory}}/{{file_version}}/"
+    failed_when: "'Enjoy.' not in make_all_command.stdout and make_all_command.rc != 0"
+    when: unarchive|changed
