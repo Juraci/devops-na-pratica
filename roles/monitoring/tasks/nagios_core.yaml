@@ -9,7 +9,7 @@
                copy=no
     register: unarchive
 
-  - name: configure nagios core for compiliation
+  - name: configure nagios core for compilation
     shell: "./configure --prefix=/usr/local/nagios --with-nagios-user=nagios --with-nagios-group=nagios --with-command-user=nagios --with-command-group=nagcmd"
     register: config_result
     args:
