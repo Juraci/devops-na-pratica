@@ -1,10 +1,9 @@
 ---
 
-  - name: download nagios core
-    get_url: url="{{nagios_core_url}}" dest="{{home_directory}}/"
+  - { include: file_downloader.yaml, url: "{{nagios_core_url}}", dest: "{{home_directory}}" }
 
   - name: extract nagios tarball
-    unarchive: src={{home_directory}}/{{file_version}}.tar.gz
+    unarchive: src={{home_directory}}/{{core_file_version}}.tar.gz
                dest={{home_directory}}
                copy=no
     register: unarchive
@@ -13,7 +12,7 @@
     shell: "./configure --prefix=/usr/local/nagios --with-nagios-user=nagios --with-nagios-group=nagios --with-command-user=nagios --with-command-group=nagcmd"
     register: config_result
     args:
-      chdir: "{{home_directory}}/{{file_version}}/"
+      chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "config_result.rc != 0"
     when: unarchive|changed
 
@@ -21,7 +20,7 @@
     shell: "make all"
     register: make_all_command
     args:
-      chdir: "{{home_directory}}/{{file_version}}/"
+      chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'Enjoy.' not in make_all_command.stdout or make_all_command.rc != 0"
     when: unarchive|changed
 
@@ -29,7 +28,7 @@
     shell: "make install"
     register: make_install_command
     args:
-      chdir: "{{home_directory}}/{{file_version}}/"
+      chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "make_install_command.rc != 0"
     when: unarchive|changed
 
@@ -37,7 +36,7 @@
     shell: "make install-commandmode"
     register: install_commandmode
     args:
-      chdir: "{{home_directory}}/{{file_version}}/"
+      chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'External command directory configured' not in install_commandmode.stdout or install_commandmode.rc != 0"
     when: unarchive|changed
 
@@ -45,7 +44,7 @@
     shell: "make install-init"
     register: install_init
     args:
-      chdir: "{{home_directory}}/{{file_version}}/"
+      chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'Init script installed' not in install_init.stdout or install_init.rc != 0"
     when: unarchive|changed
 

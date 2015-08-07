@@ -1,3 +1,5 @@
-file_version: "nagios-4.1.0rc1"
-nagios_core_url: "http://sourceforge.net/projects/nagios/files/nagios-4.x/nagios-4.1.0/{{ file_version }}.tar.gz"
+core_file_version: "nagios-4.1.0rc1"
+plugins_file_version: "nagios-plugins-2.0.3"
+nagios_core_url: "http://sourceforge.net/projects/nagios/files/nagios-4.x/nagios-4.1.0/{{ core_file_version }}.tar.gz"
+nagios_plugins_url: "http://nagios-plugins.org/download/{{ plugins_file_version }}.tar.gz"
 home_directory: "/home/vagrant"
