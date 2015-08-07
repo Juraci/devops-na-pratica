@@ -5,3 +5,5 @@
  - group: name=nagios state=present
 
  - user: name=nagios groups=nagios,nagcmd
+
+ - user: name=www-data group=nagcmd append=yes

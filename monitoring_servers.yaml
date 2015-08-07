@@ -4,4 +4,4 @@
 
   roles:
     - common
-    - monitoring
+    - monitor
