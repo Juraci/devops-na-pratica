@@ -2,11 +2,7 @@
 
   - { include: file_downloader.yaml, url: "{{nagios_core_url}}", dest: "{{home_directory}}" }
 
-  - name: extract nagios tarball
-    unarchive: src={{home_directory}}/{{core_file_version}}.tar.gz
-               dest={{home_directory}}
-               copy=no
-    register: unarchive
+  - { include: unarchiver.yaml, directory: "{{home_directory}}", file: "{{core_file_version}}", dest: "{{home_directory}}" }
 
   - name: configure nagios core for compilation
     shell: "./configure --prefix=/usr/local/nagios --with-nagios-user=nagios --with-nagios-group=nagios --with-command-user=nagios --with-command-group=nagcmd"

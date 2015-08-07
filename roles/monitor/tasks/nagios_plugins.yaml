@@ -1,8 +1,5 @@
 ---
+
   - { include: file_downloader.yaml, url: "{{nagios_plugins_url}}", dest: "{{home_directory}}" }
 
-  - name: extract nagios plugins tarball
-    unarchive: src={{home_directory}}/{{plugins_file_version}}.tar.gz
-               dest={{home_directory}}
-               copy=no
-    register: unarchive
+  - { include: unarchiver.yaml, directory: "{{home_directory}}", file: "{{plugins_file_version}}", dest: "{{home_directory}}" }

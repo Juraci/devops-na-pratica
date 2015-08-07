@@ -33,7 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.limit = "monitor"
       ansible.sudo = true
       ansible.inventory_path = "hosts"
-      ansible.verbose = "-vvvv"
       ansible.extra_vars = {
         ansible_ssh_user: "vagrant"
       }
