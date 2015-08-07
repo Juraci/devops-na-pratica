@@ -4,4 +4,3 @@
     unarchive: src={{directory}}/{{file}}.tar.gz
                dest={{dest}}
                copy=no
-    register: unarchive

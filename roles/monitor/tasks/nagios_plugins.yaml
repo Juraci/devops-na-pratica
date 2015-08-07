@@ -3,3 +3,18 @@
   - { include: file_downloader.yaml, url: "{{nagios_plugins_url}}", dest: "{{home_directory}}" }
 
   - { include: unarchiver.yaml, directory: "{{home_directory}}", file: "{{plugins_file_version}}", dest: "{{home_directory}}" }
+
+  - name: configure nagios plugins for compilation
+    shell: "./configure --with-nagios-user=nagios --with-nagios-group=nagios --with-openssl"
+    register: config_result
+    args:
+      chdir: "{{home_directory}}/{{plugins_file_version}}/"
+    failed_when: "config_result.rc != 0"
+    when: download_file|changed
+
+  - name: make
+    shell: "make"
+    register: make_command
+    args:
+      chdir: "{{home_directory}}/{{plugins_file_version}}/"
+    when: download_file|changed

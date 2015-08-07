@@ -1,3 +1,4 @@
 ---
 
   - get_url: url="{{url}}" dest="{{dest}}/"
+    register: download_file

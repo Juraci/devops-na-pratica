@@ -10,7 +10,7 @@
     args:
       chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "config_result.rc != 0"
-    when: unarchive|changed
+    when: download_file|changed
 
   - name: make all
     shell: "make all"
@@ -18,7 +18,7 @@
     args:
       chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'Enjoy.' not in make_all_command.stdout or make_all_command.rc != 0"
-    when: unarchive|changed
+    when: download_file|changed
 
   - name: make install
     shell: "make install"
@@ -26,7 +26,7 @@
     args:
       chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "make_install_command.rc != 0"
-    when: unarchive|changed
+    when: download_file|changed
 
   - name: make install-commandmode
     shell: "make install-commandmode"
@@ -34,7 +34,7 @@
     args:
       chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'External command directory configured' not in install_commandmode.stdout or install_commandmode.rc != 0"
-    when: unarchive|changed
+    when: download_file|changed
 
   - name: make install-init
     shell: "make install-init"
@@ -42,5 +42,5 @@
     args:
       chdir: "{{home_directory}}/{{core_file_version}}/"
     failed_when: "'Init script installed' not in install_init.stdout or install_init.rc != 0"
-    when: unarchive|changed
+    when: download_file|changed
 
