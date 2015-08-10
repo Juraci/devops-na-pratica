@@ -4,3 +4,4 @@
   - include: user_groups.yaml
   - include: nagios_core.yaml
   - include: nagios_plugins.yaml
+  - include: nrpe.yaml

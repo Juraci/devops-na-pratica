@@ -1,0 +1,54 @@
+---
+
+  - { include: file_downloader.yaml, url: "{{nrpe_url}}", dest: "{{home_directory}}" }
+
+  - { include: unarchiver.yaml, directory: "{{home_directory}}", file: "{{nrpe_file_version}}", dest: "{{home_directory}}" }
+
+  - name: configure nrpe for compilation
+    shell: "./configure --enable-command-args --with-nagios-user=nagios --with-nagios-group=nagios --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/x86_64-linux-gnu"
+    register: config_result
+    args:
+      chdir: "{{home_directory}}/{{nrpe_file_version}}/"
+    failed_when: "config_result.rc != 0"
+    when: download_file|changed
+
+  - name: make all
+    shell: "make all"
+    register: make_all_command
+    args:
+      chdir: "{{home_directory}}/{{nrpe_file_version}}/"
+    failed_when: "'Compile finished' not in make_all_command.stdout or make_all_command.rc != 0"
+    when: download_file|changed
+
+  - name: make install
+    shell: "make install"
+    register: make_install_command
+    args:
+      chdir: "{{home_directory}}/{{nrpe_file_version}}/"
+    failed_when: "make_install_command.rc != 0"
+    when: download_file|changed
+
+  - name: make install-xinetd
+    shell: "make install-xinetd"
+    register: make_xinetd_command
+    args:
+      chdir: "{{home_directory}}/{{nrpe_file_version}}/"
+    failed_when: "make_xinetd_command.rc != 0"
+    when: download_file|changed
+
+  - name: make install-daemon-config
+    shell: "make install-daemon-config"
+    register: make_daemon_command
+    args:
+      chdir: "{{home_directory}}/{{nrpe_file_version}}/"
+    failed_when: "make_daemon_command.rc != 0"
+    when: download_file|changed
+
+  - name: ensuring the private ip address is set
+    lineinfile: dest="/etc/xinetd.d/nrpe"
+                regexp="only_from\s+=\s+127\.0\.0\.1"
+                line="        only_from       = 127.0.0.1 {{facter_ipaddress_eth1}}"
+                state=present
+
+  - name: restarting xinetd.d service
+    service: name=xinetd state=restarted

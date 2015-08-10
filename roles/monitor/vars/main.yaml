@@ -1,5 +1,7 @@
 core_file_version: "nagios-4.1.0rc1"
 plugins_file_version: "nagios-plugins-2.0.3"
+nrpe_file_version: "nrpe-2.15"
 nagios_core_url: "http://sourceforge.net/projects/nagios/files/nagios-4.x/nagios-4.1.0/{{ core_file_version }}.tar.gz"
 nagios_plugins_url: "http://nagios-plugins.org/download/{{ plugins_file_version }}.tar.gz"
+nrpe_url: "http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/{{ nrpe_file_version  }}.tar.gz"
 home_directory: "/home/vagrant"
