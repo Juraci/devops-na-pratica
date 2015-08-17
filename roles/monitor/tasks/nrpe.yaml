@@ -45,10 +45,10 @@
     when: download_file|changed
 
   - name: ensuring the private ip address is set
-    lineinfile: dest="/etc/xinetd.d/nrpe"
+    lineinfile: 'dest="/etc/xinetd.d/nrpe"
                 regexp="only_from\s+=\s+127\.0\.0\.1"
                 line="        only_from       = 127.0.0.1 {{facter_ipaddress_eth1}}"
-                state=present
+                state=present'
 
   - name: restarting xinetd.d service
     service: name=xinetd state=restarted

@@ -17,4 +17,13 @@
     register: make_command
     args:
       chdir: "{{home_directory}}/{{plugins_file_version}}/"
+    failed_when: "make_command.rc != 0"
+    when: download_file|changed
+
+  - name: make install
+    shell: "make install"
+    register: make_install_command
+    args:
+      chdir: "{{home_directory}}/{{plugins_file_version}}/"
+    failed_when: "make_install_command.rc != 0"
     when: download_file|changed
