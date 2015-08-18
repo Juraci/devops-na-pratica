@@ -5,3 +5,4 @@
   - include: nagios_core.yaml
   - include: nagios_plugins.yaml
   - include: nrpe.yaml
+  - include: nagios_config.yaml
