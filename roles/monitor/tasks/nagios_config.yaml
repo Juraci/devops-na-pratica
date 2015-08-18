@@ -1,0 +1,8 @@
+---
+
+
+  - name: uncommenting line cfg_dir=/usr/local/nagios/etc/servers
+    lineinfile: 'dest="/etc/xinetd.d/nrpe"
+                regexp="only_from\s+=\s+127\.0\.0\.1"
+                line="        only_from       = 127.0.0.1 {{facter_ipaddress_eth1}}"
+                state=present'

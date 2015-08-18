@@ -44,3 +44,17 @@
     failed_when: "'Init script installed' not in install_init.stdout or install_init.rc != 0"
     when: download_file|changed
 
+  - name: make install-config
+    shell: "make install-config"
+    register: install_config
+    args:
+      chdir: "{{home_directory}}/{{core_file_version}}/"
+    failed_when: "'Config files installed' not in install_config.stdout or install_config.rc != 0"
+
+  - name: sample config file
+    shell: "/usr/bin/install -c -m 644 sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf"
+    register: sample_config
+    args:
+      chdir: "{{home_directory}}/{{core_file_version}}/"
+
+  - debug: var=sample_config
